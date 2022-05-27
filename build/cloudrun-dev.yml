@@ -1,0 +1,32 @@
+ steps:
+ # Build the container image
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['build', '-f', 'build/Dockerfile', '-t', 'asia.gcr.io/$PROJECT_ID/go-mail:develop', '.']
+
+ # Push the container image to Container Registry
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['push', 'asia.gcr.io/$PROJECT_ID/go-mail:develop']
+
+ # Deploy container image to Cloud Run
+ - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+   entrypoint: gcloud
+   args:
+   - 'run'
+   - 'deploy' 
+   - 'go-mail-dev'
+   - '--image'
+   - 'asia.gcr.io/$PROJECT_ID/go-mail:develop'
+   - '--region'
+   - 'asia-southeast1'
+   - '--set-env-vars'
+   - 'APP_RELEASE=true,SWAGGER.HOST=go-mail-dev-milzdundoq-as.a.run.app'
+   - '--platform'
+   - 'managed'
+   - '--port'
+   - '8000'
+   - '--allow-unauthenticated'
+   env:
+   - 'CLOUDSDK_CORE_PROJECT=ace-gcp-313707'
+   - 'CLOUDSDK_COMPUTE_ZONE=asia-southeast1-a'
+ images:
+ - 'asia.gcr.io/$PROJECT_ID/go-mail:develop'

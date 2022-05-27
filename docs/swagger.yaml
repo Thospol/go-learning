@@ -1,0 +1,175 @@
+definitions:
+  blog.CreateRequest:
+    properties:
+      author:
+        $ref: '#/definitions/models.Author'
+      message:
+        type: string
+      title:
+        type: string
+    type: object
+  models.Author:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+    type: object
+  models.Blog:
+    properties:
+      author:
+        $ref: '#/definitions/models.Author'
+      created_at:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.Message:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /blogs:
+    post:
+      consumes:
+      - application/json
+      description: Create
+      parameters:
+      - default: th
+        description: (en, th)
+        in: header
+        name: Accept-Language
+        type: string
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/blog.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Blog'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Message'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Message'
+        "410":
+          description: Gone
+          schema:
+            $ref: '#/definitions/models.Message'
+      security:
+      - ApiKeyAuth: []
+      summary: Create
+      tags:
+      - Blog
+  /blogs/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get
+      parameters:
+      - default: th
+        description: (en, th)
+        in: header
+        name: Accept-Language
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Blog'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Message'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Message'
+        "410":
+          description: Gone
+          schema:
+            $ref: '#/definitions/models.Message'
+      summary: Get
+      tags:
+      - Blog
+  /mails/send:
+    post:
+      consumes:
+      - application/json
+      description: Send
+      parameters:
+      - default: th
+        description: (en, th)
+        in: header
+        name: Accept-Language
+        type: string
+      - default: admin
+        description: (hr_officer, hr_manager, recruite, admin...)
+        in: header
+        name: Level
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Message'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Message'
+        "410":
+          description: Gone
+          schema:
+            $ref: '#/definitions/models.Message'
+      security:
+      - ApiKeyAuth: []
+      summary: Send
+      tags:
+      - Mail
+swagger: "2.0"

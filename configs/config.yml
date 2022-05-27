@@ -1,0 +1,31 @@
+APP:
+  PROJECT_ID: "go-mail"
+  HOST: ""
+  WEB_BASE_URL: "/"
+  API_BASE_URL: "/api"
+  RELEASE: false
+  PORT: 8000
+
+SWAGGER:
+  TITLE: "API Docs"
+  DESCRIPTION: "API for send mail"
+  VERSION: "1.0"
+  HOST: "localhost:8000"
+  BASE_URL: "/api/v1"
+  ENABLE: true
+
+SMTP:
+  HOST: "smtp.ace-energy.co.th"
+  PORT: 587
+  USERNAME: ""
+  PASSWORD: ""
+  SENDER:  "radius@ace-energy.co.th"
+  SENDER_ALIAS: "radius"
+  
+SQL:
+  HOST: "localhost"
+  PORT: 3306
+  USERNAME: "root"
+  PASSWORD: "P@ssw0rd"
+  DATABASE_NAME: "learning"
+  DRIVER_NAME: "mysql"
